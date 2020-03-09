@@ -1,0 +1,16 @@
+{# BASE HTML #}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Welcome to my Flask Site</title>
+    </head>
+    <body>
+        <h1><a href="{{url_for('index')}}">Welcome to my Flask Site!</a></h1>
+        {% block content %}
+        
+        
+        {% endblock %}
+    </body>
+</html>
