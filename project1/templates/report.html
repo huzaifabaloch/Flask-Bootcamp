@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-4">Let's see how you performed!</h1>
+      {% if upper and lower and digit %}
+        <p class="lead">Your username passed the 3 requirements!</p>
+       {% else %}
+        <p class="lead">Oh no! Looks like you had issues with your username!</p>
+        <ul>
+          {% if not lower %}
+            <li class='lead'>No lowercase letters found!</li>
+          {% endif %}
+          {% if not upper %}
+            <li class='lead'>No uppercase letters found!</li>
+          {% endif %}
+          {% if not digit %}
+            <li class='lead'>No digit found!</li>
+          {% endif %}
+        </ul>
+
+      {% endif %}
+    </div>
+</div>
+{% endblock %}

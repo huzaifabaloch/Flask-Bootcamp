@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-6">Welcome to Check my username, by techytuna</h1>
+      <p class="lead">Let's see if your username is secure</p>
+      <p class="lead">Fill out the form below with a User Name that has these three constraints</p>
+      <ul>
+          <li class='lead'>Must have an upper case letter somewhere.</li>
+          <li class='lead'>Must have a lower case letter somewhere.</li>
+          <li class='lead'>Must have a number in the end.</li>
+      </ul>
+      <form action="{{url_for('report')}}">
+        <label for="user-name">Enter a valid username</label>
+        <input type='text' name='username'>
+        <input type='submit' value='Check'>
+      </form>
+    </div>
+  </div>
+
+
+{% endblock %}
