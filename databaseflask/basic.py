@@ -1,6 +1,7 @@
 import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate  # MIGRATION
 
 
 #####################################
@@ -20,6 +21,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATION'] = False
 
 db = SQLAlchemy(app)
 
+Migrate(app, db)  # This connects the DB with app to do migrations.
 ######################################################
 
 # Creating our first MODEL  ->   TABLE in SQL Database
@@ -33,10 +35,12 @@ class Puppy(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.Text)
     age = db.Column(db.Integer)
+    breed = db.Column(db.Text)
 
-    def __init__(self, name, age):
+    def __init__(self, name, age, breed):
         self.name = name
         self.age = age
+        self.breed = breed
 
     # String representation
     def __repr__(self):
