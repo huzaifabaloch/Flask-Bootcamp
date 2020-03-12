@@ -21,9 +21,6 @@ def report():
             upper += 1
         elif u == u.lower():
             lower += 1
-        
-
-    
     
     return render_template('report.html', upper=upper, lower=lower,
                              digit=digit)
