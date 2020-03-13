@@ -1,6 +1,8 @@
 from model import db, Puppy, Toy, Owner
 
 
+db.create_all()
+
 # Creating two puppies
 rufus = Puppy('Rufus')
 tuna = Puppy('Tuna')
@@ -16,6 +18,8 @@ print(all_pups)
 tuna = Puppy.query.filter_by(name='Tuna').first()
 print(tuna)
 
+a = Puppy.query.filter_by(id=1).first()
+print(a.id)
 
 # Create Owner object
 huzaifa = Owner('Huzaifa', tuna.id)
