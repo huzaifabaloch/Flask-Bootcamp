@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {% for flash in get_flashed_messages() %}
+{% for flash in get_flashed_messages() %}
     <div class="alert alert-warning alert-dismissible fade show" role="alert">
         <button type="button" class="fade close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
@@ -10,12 +10,16 @@
     </div>
     {% endfor %}
     <div class='jumbotron'>
-        <h1>Did a puppy get adopted?</h1>
-        <p>If so, Please enter their ID to remove them from database</p>
+        <h1>Add an Owner for a Puppy</h1>
+        <p>Add a new owner with the form below</p>
         <form method='POST'>
             {{ form.hidden_tag() }}
-            {{ form.id.label }} {{ form.id() }}
+            {{ form.name.label }} {{ form.name() }}
+            <br>
+            {{ form.puppy_id.label }} {{ form.puppy_id() }}
+            <br>
             {{ form.submit() }}
         </form>
     </div>
-{% endblock%}
+
+{% endblock %}
