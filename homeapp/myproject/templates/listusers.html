@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class='jumbotron'>
+        {% if all_users %}
+        <table class='table'>
+            <thead class="thead-dark">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">User Name</th>
+                  <th scope="col">Device Name</th>
+                  <th scope="col">MAC Address</th>
+                </tr>
+              </thead>
+            {% for each_user in all_users %}
+                <tbody>
+                    <tr>
+                        <th scope="row">{{ loop.index }}</th>
+                        <td>{{ each_user.username }}</td>
+                        <td>{{ each_user.devicename }}</td>
+                        <td>{{ each_user.macaddress }}</td>
+                    </tr>
+                </tbody>
+            {% endfor %}
+        </table>
+        {% else %}
+            <h1>No Data Available!</h1>
+        {% endif %}
+    </div>
+{% endblock %}
+
+
+    
