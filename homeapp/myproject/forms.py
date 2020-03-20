@@ -19,6 +19,13 @@ class Login(FlaskForm):
     submit = SubmitField('Login')
 
 
+class UpdateAdmin(FlaskForm):
+
+    username = StringField('Username')
+    password = PasswordField('Password')
+    submit = SubmitField('Save Changes')
+
+
 class Register(FlaskForm):
 
     username = StringField('Username')
