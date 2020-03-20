@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class='jumbotron'>
+        <h1>Settings</h1>
+        <p>Change Authentication</p>
+        <form method="POST">
+            {{ form.hidden_tag() }} 
+            {{ form.username.label }} {{ form.username() }}
+            {{ form.password.label }} {{ form.password() }}
+            {{ form.submit() }}
+        </form>
+        <br>
+        {% for message in get_flashed_messages() %}
+            {{ message }}
+        {% endfor %}
+    </div>
+{% endblock %}
