@@ -1,7 +1,7 @@
 from myproject import app, db
 from flask import render_template, redirect, url_for, request, flash
 from myproject.models import HomeUsers, Admin
-from myproject.forms import AddHomeUser, Login, Register, UpdateAdmin
+from myproject.forms import AddHomeUser, Login, UpdateAdmin
 from utils import automation
 from flask_login import login_required, login_user, logout_user, user_logged_out
 from flask_login import current_user
@@ -37,25 +37,12 @@ def login():
             if user.username == form.username.data and user.password == form.password.data:
                 login_user(user)
                 return redirect(url_for('add_user'))
+            else:
+                flash('Wrong Username or Password!')
+        else:
+                flash('Wrong Username or Password!')
 
     return render_template('login.html', form=form)
-
-
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-
-    form = Register()
-
-    if form.validate_on_submit():
-
-        user = Admin(username=form.username.data, password=form.password.data)
-        db.session.add(user)
-        db.session.commit()
-        flash('User Added')
-
-        return redirect(url_for('login'))
-    
-    return render_template('register.html', form=form)
 
 
 @app.route('/add_user', methods=['GET', 'POST'])
@@ -73,7 +60,7 @@ def add_user():
         db.session.add(user)
         db.session.commit()
 
-        #automation(macaddress)
+        automation(macaddress)
 
         flash('User added!')
 
@@ -105,7 +92,18 @@ def settings():
         username = form.username.data
         password = form.password.data
 
-        if username and not password:
+        if username and password:
+
+            admin = Admin.query.filter_by(username=current_user.username).first()
+            
+            admin.username = username
+            admin.password = password
+            db.session.add(admin)
+            db.session.commit()
+
+            flash('Username and Password Changed!')
+
+        elif username and not password:
 
             admin = Admin.query.filter_by(username=current_user.username).first()
             
