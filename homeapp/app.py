@@ -1,7 +1,7 @@
 from myproject import app, db
 from flask import render_template, redirect, url_for, request, flash
 from myproject.models import HomeUsers, Admin
-from myproject.forms import AddHomeUser, Login, Register
+from myproject.forms import AddHomeUser, Login, Register, UpdateAdmin
 from utils import automation
 from flask_login import login_required, login_user, logout_user, user_logged_out
 from flask_login import current_user
@@ -33,9 +33,10 @@ def login():
 
     if form.validate_on_submit():
         user = Admin.query.filter_by(username=form.username.data).first()
-        if user.username == form.username.data and user.password == form.password.data:
-            login_user(user)
-            return redirect(url_for('add_user'))
+        if user:
+            if user.username == form.username.data and user.password == form.password.data:
+                login_user(user)
+                return redirect(url_for('add_user'))
 
     return render_template('login.html', form=form)
 
@@ -94,6 +95,40 @@ def list_users():
     all_users = HomeUsers.query.all()
 
     return render_template('listusers.html', all_users=all_users)
+
+
+@app.route('/settings', methods=['GET', 'POST'])
+def settings():
+
+    form = UpdateAdmin()
+    if form.validate_on_submit():
+        username = form.username.data
+        password = form.password.data
+
+        if username and not password:
+
+            admin = Admin.query.filter_by(username=current_user.username).first()
+            
+            admin.username = username
+            db.session.add(admin)
+            db.session.commit()
+
+            flash('Username Changed!')
+
+        elif password and not username:
+
+            admin = Admin.query.filter_by(username=current_user.username).first()
+            
+            admin.password = password
+            db.session.add(admin)
+            db.session.commit()
+
+            flash('Password Changed')
+
+        else:
+            flash('Please, fill out username or password to change.')
+
+    return render_template('settings.html', form=form)
 
 
 if __name__ == '__main__':
