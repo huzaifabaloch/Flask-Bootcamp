@@ -33,3 +33,6 @@ def automation(macaddress):
     driver.find_element_by_xpath("//input[@value='Add']").click()
     driver.implicitly_wait(2)
     driver.find_element_by_xpath("//input[@name='wlFltMacAddr']").send_keys(macaddress)
+    driver.find_element_by_xpath("//input[@value='Apply/Save']").click()
+    driver.implicitly_wait(3)
+    driver.close()
