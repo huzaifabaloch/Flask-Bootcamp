@@ -1,5 +1,6 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import desc
 from datetime import datetime
 
 
@@ -38,7 +39,7 @@ def index():
             return 'There was a problem adding new item!'
 
     else:
-        groceries = Grocery.query.order_by(Grocery.date_created).all()
+        groceries = Grocery.query.order_by(desc(Grocery.id)).all()
         return render_template('index.html', groceries=groceries)
 
 
@@ -52,17 +53,27 @@ def delete(id):
         db.session.commit()
         return redirect('/')
     except:
-        return 'There was a probem deleting item!'
+        return 'There was a problem deleting item!'
 
 
-@app.route('/update/<int:id>')
+
+@app.route('/update/<int:id>', methods=['GET', 'POST'])
 def update(id):
 
     item = Grocery.query.get_or_404(id)
 
-    print(item)
-
-    return redirect('/')
+    if request.method == 'POST':
+        new_item = request.form['name']
+        item.name = new_item
+        try:
+            db.session.commit()
+            return redirect('/')
+        except:
+            return 'There was a problem updating item!'
+    
+    else:
+        return render_template('update.html', item=item)
+    
 
 
 
